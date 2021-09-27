@@ -1,7 +1,7 @@
 # 박재우-20212999
 import pickle
 
-dbfilename = 'JW0705.dat'
+dbfilename = 'test3_4.dat'
 
 def readScoreDB():
     try:
@@ -62,12 +62,14 @@ def doScoreDB(scdb):
             except IndexError:
                 print("Incorrect command: 'find name'")
         elif parse[0] == 'inc':
-            if len(parse[]) < 3:
-                print("Incorrect command: 'inc name score'")
-            else:
+            try:
                 for p in scdb:
                     if p['Name'] == parse[1]:
-                        p['Score'] = int(p['Score'])+int(parse[2])
+                        p['Score'] = str(int(p['Score'])+int(parse[2]))
+            except IndexError:
+                print("Incorrect command: 'inc name score'")
+            except ValueError:
+                print("Check data type: 'inc name score")
         elif parse[0] == 'quit':
             break
         else:
