@@ -1,4 +1,4 @@
-#20213001- 박지민
+#박지민-20213001
 import pickle
 
 dbfilename = 'assignment3-20213001'
