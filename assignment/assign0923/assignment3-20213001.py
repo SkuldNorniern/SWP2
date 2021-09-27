@@ -34,20 +34,44 @@ def doScoreDB(scdb):
         if inputstr == "": continue
         parse = inputstr.split(" ")
         if parse[0] == 'add':
-            record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
-            scdb += [record]
+            try:
+                record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
+                scdb += [record]
+            except IndexError:
+                print(" name , age, Score 을 입력하세요")
+                
         elif parse[0] == 'del':
-            for p in scdb:
-                if p['Name'] == parse[1]:
-                    scdb.remove(p)    
-                    break
+            try :
+                for i in scdb:              
+                    if i['Name'] == parse[1] :
+                        while i in scbd:    
+	                        scdb.remove(i)
+                
+            except IndexError:
+                print("name을 입력하세요") 
+                    
         elif parse[0] == 'show':
             sortKey ='Name' if len(parse) == 1 else parse[1]
             showScoreDB(scdb, sortKey)
+            
         elif parse[0] == 'quit':
             break
-        else:
-            print("Invalid command: " + parse[0])
+                      
+        elif parse[0] == 'find':
+            try :
+                for i in scdb:
+                    if i['Name'] == parse[1]:
+                        print(i)
+            except IndexError:
+                print("name을 입력하세요")
+                    
+        elif parse[0] == 'inc':
+            try :
+                for i in scdb:
+                    if i['Name'] == parse[1]:
+                        i['Score'] = str(int(i['Score'])+ int(parse[2]))
+            except IndexError:
+                    print("name을 입력하세요")
 
 
 def showScoreDB(scdb, keyname):
