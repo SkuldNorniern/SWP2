@@ -1,7 +1,7 @@
 #20213001- 박지민
 import pickle
 
-dbfilename = 'test3_4.dat'
+dbfilename = 'assignment3-20213001'
 
 def readScoreDB():
     try:
