@@ -1,3 +1,5 @@
+# 박재우-20212999
+
 def solution(num):
     answer = 0
     while(num!=0):
