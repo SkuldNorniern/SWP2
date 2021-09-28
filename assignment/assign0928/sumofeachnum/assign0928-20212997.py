@@ -1,3 +1,4 @@
+# 박시윤-20212997
 def solution(num):
     list = [int(i) for i in str(num)]
     answer=sum(list)
