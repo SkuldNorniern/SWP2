@@ -29,7 +29,7 @@ If changes to the master branch have a conflict, it should be merged with a merg
 ### Contribute files
 On any week's file the files will be contributed as [Assignment_name]-[Github username] format
 
-> Triangle-SkuldNorniern.py
+> assignXXXX-student number.py
 
 And also in the files that you write on the very top use comment and put your name and student number in [Name]-[Student Number] format
 
