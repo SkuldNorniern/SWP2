@@ -48,9 +48,12 @@ def doScoreDB(scdb):
                 scdb += [record]
         elif parse[0] == 'del':
             try:
-                for p in scdb:
-                    if p['Name'].lower() == parse[1].lower():
-                        scdb.remove(p)    
+                i = 0
+                while i < len(scdb):
+                    for p in scdb:
+                        if p['Name'].lower() == parse[1].lower():
+                            scdb.remove(p) 
+                    i += 1
             except IndexError:
                 print("input name")
         elif parse[0] == 'show':
