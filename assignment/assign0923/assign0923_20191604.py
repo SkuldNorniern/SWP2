@@ -48,9 +48,9 @@ def doScoreDB(scdb):
                 scdb += [record]
         elif parse[0] == 'del':
             try:
-                for p in scdb:
-                    if p['Name'].lower() == parse[1].lower():
-                        scdb.remove(p)    
+                for p in reversed(scdb):
+                    if p['Name'] == parse[1]:
+                        scdb.remove(p)
             except IndexError:
                 print("input name")
         elif parse[0] == 'show':
@@ -65,10 +65,13 @@ def doScoreDB(scdb):
                 print("input name")
         elif parse[0] == 'inc':
             try:
-                for p in scdb:
-                    if p['Name'] == parse[1]:
-                        p['Score'] = int(p['Score'])
-                        p['Score'] += int(parse[2])
+                if len(parse) == 3:
+                    for p in scdb:
+                        if p['Name'] == parse[1]:
+                            p['Score'] = int(p['Score'])
+                            p['Score'] += int(parse[2])
+                else:
+                    raise Exception("amount must be integer")
             except IndexError:
                 print("input name, num")
             except ValueError:

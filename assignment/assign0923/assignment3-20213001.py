@@ -44,7 +44,7 @@ def doScoreDB(scdb):
             try :
                 for i in scdb:              
                     if i['Name'] == parse[1] :
-                        while i in scbd:    
+                        for j in scdb:    
 	                        scdb.remove(i)
                 
             except IndexError:
