@@ -33,25 +33,44 @@ def doScoreDB(scdb):
         if inputstr == "": continue
         parse = inputstr.split(" ")
         if parse[0] == 'add':
-            record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
-            scdb += [record]
+            try:
+                record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
+            except IndexError:
+                print("Error")
+            else:
+                scdb += [record]
         elif parse[0] == 'del':
-            for p in scdb:
-                if p['Name'] == parse[1]:
-                    scdb.remove(p)
+            try:
+                list = []
+                for p in scdb:
+                    if p['Name'] != parse[1]:
+                        list.append(p)
+                scdb = list
+            except IndexError:
+                print("Error")
         elif parse[0] == 'show':
             sortKey ='Name' if len(parse) == 1 else parse[1]
             showScoreDB(scdb, sortKey)
         elif parse[0] == 'quit':
             break
         elif parse[0] == 'find':
-            for i in scdb:
-                if i['Name'] == parse[1]:
-                    print(i)
+            try:
+                list = []
+                for p in scdb:
+                    if p['Name'] == parse[1]:
+                        list.append(p)
+                        showScoreDB(list, 'Name')
+            except IndexError:
+                print("Error")
         elif parse[0] == 'inc':
-            for i in scdb:
-                if i['Name'] == parse[1]:
-                    i['Score'] = str(int(i['Score'])+ int(parse[2]))
+            try:
+                for p in scdb:
+                    if p['Name'] == parse[1]:
+                        p['Score'] = str(int(p['Score'])+int(parse[2]))
+            except IndexError:
+                print("Error")
+            except ValueError:
+                print("Error")
         else:
             print("Invalid command: " + parse[0])
 
