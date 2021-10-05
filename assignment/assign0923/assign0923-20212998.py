@@ -42,6 +42,8 @@ def DoSDB(scdb):
             if parse[0] == 'add':
                 if len(parse) < 4:
                     raise Exception('Input the name, age, score.')
+                if len(parse) > 4:
+                    raise Exception('Input only the name, age, score.')
                 if not (parse[2].isdigit() and parse[3].isdigit()):
                     raise Exception('Input of the age and score must be in integer form.')
                 record = {'Name': parse[1], 'Age': int(parse[2]),'Score': int(parse[3])}
@@ -49,6 +51,8 @@ def DoSDB(scdb):
             elif parse[0] == 'del':
                 if len(parse) < 2:
                     raise Exception('Input name for del.')
+                if len(parse) > 2:
+                    raise Exception('Input only one name for del.')
                 for p in reversed(scdb):
                     if p['Name'] == parse[1]:
                         scdb.remove(p)
@@ -58,14 +62,22 @@ def DoSDB(scdb):
             elif parse[0] == 'find':
                 if len(parse) < 2:
                     raise Exception('Input name to find.')
-                target_scdb = []
+                if len(parse) > 2:
+                    raise Exception('Input only one name to find.')
+                target= []
                 for p in scdb:
                     if p['Name'] == parse[1]:
-                        target_scdb.append(p)
-                ShowSDB(target_scdb, 'Age')
+                        target.append(p)
+                if len(target) ==0:
+                    raise Exception('Nothing found')
+                ShowSDB(target, 'Age')
+
+
             elif parse[0] == 'inc':
                 if len(parse) < 3:
                     raise Exception('Input name and the amount to inc.')
+                if len(parse) > 3:
+                    raise Exception('Input only name and the amount to inc.')
                 if not parse[2].isdigit():
                     raise Exception('Imput amount in integer form to inc.')
                 for p in scdb:
