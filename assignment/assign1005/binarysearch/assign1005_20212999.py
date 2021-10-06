@@ -24,7 +24,6 @@ def recbinsearch(L, l, u, target):
 
     return recbinsearch(L, l, u, target)
 
-
 numofnbrs = int(input("Enter a number: "))
 numbers = []
 for i in range(numofnbrs):
@@ -43,7 +42,7 @@ ts = time.time()
 # binary search - recursive
 cnt = 0
 for target in targets:
-    idx = recbinsearch(numbers, 0, len(numbers)-1, target)
+    idx = recbinsearch(numbers, 0, len(numbers), target)
     if idx == -1:
         cnt += 1
 ts = time.time() - ts
