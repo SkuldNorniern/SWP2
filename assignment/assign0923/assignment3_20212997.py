@@ -34,7 +34,7 @@ def doScoreDB(scdb):
         if inputstr == "": continue
         parse = inputstr.split(" ")
         if parse[0] == 'add':
-            if len(parse)>=4:
+            if len(parse)==4:
                 try:
                     record = {'Name':parse[1], 'Age':int(parse[2]), 'Score':int(parse[3])}
                 except ValueError as e:
@@ -44,7 +44,7 @@ def doScoreDB(scdb):
             else:
                 print("add의 입력 형식이 옳지 않습니다. (add 이름 나이 점수)")
         elif parse[0] == 'del':
-            if len(parse)>=2:
+            if len(parse)==2:
                 list = []
                 for p in scdb:
                     if p['Name'] != parse[1]:
@@ -61,7 +61,7 @@ def doScoreDB(scdb):
         elif parse[0] == 'quit':
             break
         elif parse[0] == 'inc':
-            if len(parse)>=3:
+            if len(parse)==3:
                 try:
                     int(parse[2])
                 except ValueError as e:
@@ -73,11 +73,14 @@ def doScoreDB(scdb):
             else:
                 print("inc의 입력 형식이 옳지 않습니다. (inc 이름 추가할점수)")
         elif parse[0] == 'find':
-            if len(parse)>=2:
+            if len(parse)==2:
+                if parse[1]=='':
+                    print("이름을 한글자 이상 입력해주세요.")
+                    continue
                 for n in scdb:
                     if n['Name'] == parse[1]:
                         for attr in sorted(n):
-                            print(attr + "=" + n[attr], end=' ')
+                            print(attr + "=" + str(n[attr]), end=' ')
                         print()
             else:
                 print("find의 입력 형식이 옳지 않습니다. (find 이름)")
@@ -88,7 +91,7 @@ def doScoreDB(scdb):
             print("inc 이름 추가할점수 : 이름을 가진 모든 사람의 점수를 추가할점수만큼 추가합니다.")
             print("find 이름 : 해당 이름을 가진 모든 사람들의 레코드들을 찾습니다.")
             print("quit : 변경사항을 저장하고 프로그램을 종료합니다.")
-            print("!    모든 명령어에 필요한 정보보다 많은 것들을 입력할 경우 해당 정보들은 무시됩니다    !")
+            print("!    모든 명령어에 필요한 정보보다 많은 것들을 입력할 경우 명령어가 무시됩니다    !")
         else:
             print("Invalid command: " + parse[0])
             print("명령어에 도움이 필요할 경우 help를 입력하시오.")
