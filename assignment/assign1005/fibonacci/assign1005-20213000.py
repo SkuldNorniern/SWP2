@@ -2,9 +2,13 @@ import time
 import random
 
 def fibo(n):
-    if n <= 1:
+    lst = [1,1]
+    if n == 1 or n == 2:
         return n
-    return fibo(n - 1) + fibo(n - 2)
+
+    for i in range(2, n):
+        lst.append(lst[i-2]+lst[i-1])
+    return lst[n-1]
 
 
 while True:
