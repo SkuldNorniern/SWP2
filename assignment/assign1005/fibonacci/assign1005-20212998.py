@@ -7,10 +7,10 @@ def fibo(n):
     return fibo(n - 1) + fibo(n - 2)
 
 def iterfibo(n):
-    g=[1,1,2];
-    for i in range(3,n):
+    g=[0,1,1];
+    for i in range(3,n+1):
         g.append(g[i-1]+g[i-2])
-    return g[n-1]
+    return g[n]
 
 while True:
     nbr = int(input("Enter a number: "))
