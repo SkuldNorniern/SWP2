@@ -10,13 +10,12 @@ def seqsearch(nbrs, target):
 
 
 def recbinsearch(L, l, u, target):
-    pivot = len(L)//2 + 1
-    if L[pivot] < target:
-       return(L, l,L[pivot] ,target) 
-    elif L[pivot] > target:
-        return(L, L[pivot],u ,target) 
+    if L[len(L)//2 + 1] < target:
+       return(L, l,L[len(L)//2 + 1] ,target) 
+    elif L[len(L)//2 + 1] > target:
+        return(L, L[len(L)//2 + 1],u ,target) 
     else:
-        return L[pivot]
+        return L[len(L)//2 + 1]
 
 numofnbrs = int(input("Enter a number: "))
 numbers = []
