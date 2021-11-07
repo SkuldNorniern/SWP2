@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QLayout, QGridLayout
 class Button(QToolButton):
 
     def __init__(self, text, callback):
-        super().__init__(self, text, callback)
+        super().__init__()
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.setText(text)
         self.clicked.connect(callback)
@@ -25,7 +25,7 @@ class Calculator(QWidget):
         super().__init__(parent)
 
         # Display Window
-        self.display = QLineEdit('0')
+        self.display = QLineEdit()
         self.display.setReadOnly(True)
         self.display.setAlignment(Qt.AlignRight)
         self.display.setMaxLength(15)
@@ -47,21 +47,21 @@ class Calculator(QWidget):
         self.digitButton[9] = Button('9', self.buttonClicked)
 
         # . and = Buttons
-        self.decButton = Button('.')
-        self.eqButton = Button('=')
+        self.decButton = Button('.', self.buttonClicked)
+        self.eqButton = Button('=', self.buttonClicked)
 
         # Operator Buttons
-        self.mulButton = Button('*')
-        self.divButton = Button('/')
-        self.addButton = Button('+')
-        self.subButton = Button('-')
+        self.mulButton = Button('*', self.buttonClicked)
+        self.divButton = Button('/', self.buttonClicked)
+        self.addButton = Button('+', self.buttonClicked)
+        self.subButton = Button('-', self.buttonClicked)
 
         # Parentheses Buttons
-        self.lparButton = Button('(')
-        self.rparButton = Button(')')
+        self.lparButton = Button('(', self.buttonClicked)
+        self.rparButton = Button(')', self.buttonClicked)
 
         # Clear Button
-        self.clearButton = Button('C')
+        self.clearButton = Button('C', self.buttonClicked)
 
         # Layout
         mainLayout = QGridLayout()
@@ -106,15 +106,17 @@ class Calculator(QWidget):
         self.setWindowTitle("My Calculator")
 
     def buttonClicked(self):
+
         button = self.sender()
         key = button.text()
-        if key == "=":
+
+        if key == '=':
             result = str(eval(self.display.text()))
             self.display.setText(result)
-        elif key == "C":
+        elif key == 'C':
             self.display.setText('')
         else:
-            self.display.setText(self.dispaly.text() + key)
+            self.display.setText(self.display.text() + key)
 
 if __name__ == '__main__':
 
