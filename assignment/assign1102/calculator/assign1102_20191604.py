@@ -1,9 +1,9 @@
+# 백연선-20191604
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QLineEdit, QToolButton
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QLayout, QGridLayout
-
 
 class Button(QToolButton):
 
@@ -19,6 +19,7 @@ class Button(QToolButton):
         size.setWidth(max(size.width(), size.height()))
         return size
 
+
 class Calculator(QWidget):
 
     def __init__(self, parent=None):
@@ -30,21 +31,22 @@ class Calculator(QWidget):
         self.display.setAlignment(Qt.AlignRight)
         self.display.setMaxLength(15)
 
-
-
         # Digit Buttons
         self.digitButton = [x for x in range(0, 10)]
+        for x in range(0, 10):
+            self.digitButton[x] = Button('%d' % x, self.buttonClicked)
+        # self.digitButton[0] = Button('0', self.buttonClicked)
+        # self.digitButton[1] = Button('1', self.buttonClicked)
+        # self.digitButton[2] = Button('2', self.buttonClicked)
+        # self.digitButton[3] = Button('3', self.buttonClicked)
+        # self.digitButton[4] = Button('4', self.buttonClicked)
+        # self.digitButton[5] = Button('5', self.buttonClicked)
+        # self.digitButton[6] = Button('6', self.buttonClicked)
+        # self.digitButton[7] = Button('7', self.buttonClicked)
+        # self.digitButton[8] = Button('8', self.buttonClicked)
+        # self.digitButton[9] = Button('9', self.buttonClicked)
 
-        self.digitButton[0] = Button('0', self.buttonClicked)
-        self.digitButton[1] = Button('1', self.buttonClicked)
-        self.digitButton[2] = Button('2', self.buttonClicked)
-        self.digitButton[3] = Button('3', self.buttonClicked)
-        self.digitButton[4] = Button('4', self.buttonClicked)
-        self.digitButton[5] = Button('5', self.buttonClicked)
-        self.digitButton[6] = Button('6', self.buttonClicked)
-        self.digitButton[7] = Button('7', self.buttonClicked)
-        self.digitButton[8] = Button('8', self.buttonClicked)
-        self.digitButton[9] = Button('9', self.buttonClicked)
+
 
         # . and = Buttons
         self.decButton = Button('.', self.buttonClicked)
@@ -72,15 +74,17 @@ class Calculator(QWidget):
         numLayout = QGridLayout()
 
         numLayout.addWidget(self.digitButton[0], 3, 0)
-        numLayout.addWidget(self.digitButton[1], 2, 0)
-        numLayout.addWidget(self.digitButton[2], 2, 1)
-        numLayout.addWidget(self.digitButton[3], 2, 2)
-        numLayout.addWidget(self.digitButton[4], 1, 0)
-        numLayout.addWidget(self.digitButton[5], 1, 1)
-        numLayout.addWidget(self.digitButton[6], 1, 2)
-        numLayout.addWidget(self.digitButton[7], 0, 0)
-        numLayout.addWidget(self.digitButton[8], 0, 1)
-        numLayout.addWidget(self.digitButton[9], 0, 2)
+        for i in range(1, 10):
+            numLayout.addWidget(self.digitButton[i], (9-i)//3, (i-1)%3)
+#         numLayout.addWidget(self.digitButton[1], 2, 0)
+#         numLayout.addWidget(self.digitButton[2], 2, 1)
+#         numLayout.addWidget(self.digitButton[3], 2, 2)
+#         numLayout.addWidget(self.digitButton[4], 1, 0)
+#         numLayout.addWidget(self.digitButton[5], 1, 1)
+#         numLayout.addWidget(self.digitButton[6], 1, 2)
+#         numLayout.addWidget(self.digitButton[7], 0, 0)
+#         numLayout.addWidget(self.digitButton[8], 0, 1)
+#         numLayout.addWidget(self.digitButton[9], 0, 2)
 
         numLayout.addWidget(self.decButton, 3, 1)
         numLayout.addWidget(self.eqButton, 3, 2)
@@ -106,10 +110,8 @@ class Calculator(QWidget):
         self.setWindowTitle("My Calculator")
 
     def buttonClicked(self):
-
         button = self.sender()
         key = button.text()
-
         if key == '=':
             result = str(eval(self.display.text()))
             self.display.setText(result)
@@ -117,6 +119,7 @@ class Calculator(QWidget):
             self.display.setText('')
         else:
             self.display.setText(self.display.text() + key)
+
 
 if __name__ == '__main__':
 
@@ -126,5 +129,3 @@ if __name__ == '__main__':
     calc = Calculator()
     calc.show()
     sys.exit(app.exec_())
-
-

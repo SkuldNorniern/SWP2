@@ -19,32 +19,23 @@ class Button(QToolButton):
         size.setWidth(max(size.width(), size.height()))
         return size
 
+
 class Calculator(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
         # Display Window
-        self.display = QLineEdit()
+        self.display = QLineEdit('0')
         self.display.setReadOnly(True)
         self.display.setAlignment(Qt.AlignRight)
         self.display.setMaxLength(15)
 
-
-
         # Digit Buttons
         self.digitButton = [x for x in range(0, 10)]
 
-        self.digitButton[0] = Button('0', self.buttonClicked)
-        self.digitButton[1] = Button('1', self.buttonClicked)
-        self.digitButton[2] = Button('2', self.buttonClicked)
-        self.digitButton[3] = Button('3', self.buttonClicked)
-        self.digitButton[4] = Button('4', self.buttonClicked)
-        self.digitButton[5] = Button('5', self.buttonClicked)
-        self.digitButton[6] = Button('6', self.buttonClicked)
-        self.digitButton[7] = Button('7', self.buttonClicked)
-        self.digitButton[8] = Button('8', self.buttonClicked)
-        self.digitButton[9] = Button('9', self.buttonClicked)
+        for i in self.digitButton:
+            self.digitButton[i] = Button(str(i), self.buttonClicked)
 
         # . and = Buttons
         self.decButton = Button('.', self.buttonClicked)
@@ -72,15 +63,9 @@ class Calculator(QWidget):
         numLayout = QGridLayout()
 
         numLayout.addWidget(self.digitButton[0], 3, 0)
-        numLayout.addWidget(self.digitButton[1], 2, 0)
-        numLayout.addWidget(self.digitButton[2], 2, 1)
-        numLayout.addWidget(self.digitButton[3], 2, 2)
-        numLayout.addWidget(self.digitButton[4], 1, 0)
-        numLayout.addWidget(self.digitButton[5], 1, 1)
-        numLayout.addWidget(self.digitButton[6], 1, 2)
-        numLayout.addWidget(self.digitButton[7], 0, 0)
-        numLayout.addWidget(self.digitButton[8], 0, 1)
-        numLayout.addWidget(self.digitButton[9], 0, 2)
+        for i in range(1,10):
+            numLayout.addWidget(self.digitButton[i], (9-i)//3, (i-1)%3)
+
 
         numLayout.addWidget(self.decButton, 3, 1)
         numLayout.addWidget(self.eqButton, 3, 2)
@@ -106,7 +91,6 @@ class Calculator(QWidget):
         self.setWindowTitle("My Calculator")
 
     def buttonClicked(self):
-
         button = self.sender()
         key = button.text()
 
@@ -114,8 +98,10 @@ class Calculator(QWidget):
             result = str(eval(self.display.text()))
             self.display.setText(result)
         elif key == 'C':
-            self.display.setText('')
+            self.display.setText('0')
         else:
+            if self.display.text()[0] == '0':
+                self.display.setText('')
             self.display.setText(self.display.text() + key)
 
 if __name__ == '__main__':
@@ -126,5 +112,4 @@ if __name__ == '__main__':
     calc = Calculator()
     calc.show()
     sys.exit(app.exec_())
-
 
