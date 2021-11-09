@@ -30,28 +30,18 @@ class Calculator(QWidget):
         self.display.setAlignment(Qt.AlignRight)
         self.display.setMaxLength(15)
 
-        # Digit Buttons
         self.digitButton = [x for x in range(0, 10)]
 
-        for i in self.digitButton:
+        for i in range(0, 10):
             self.digitButton[i] = Button(str(i), self.btnCli)
 
-        # . and = Buttons
-        self.decButton = Button('.', self.btnCli)
-        self.eqButton = Button('=', self.btnCli)
+        # Function Buttons & Symbols
+        symbol = ['.', '=', '*', '/', '+', '-', '(', ')', 'C']
 
-        # Operator Buttons
-        self.mulButton = Button('*', self.btnCli)
-        self.divButton = Button('/', self.btnCli)
-        self.addButton = Button('+', self.btnCli)
-        self.subButton = Button('-', self.btnCli)
+        self.functionButton = [x for x in symbol]
 
-        # Parentheses Buttons
-        self.lparButton = Button('(', self.btnCli)
-        self.rparButton = Button(')', self.btnCli)
-
-        # Clear Button
-        self.clearButton = Button('C', self.btnCli)
+        for i, symbol in enumerate(symbol):
+            self.functionButton[i] = Button(symbol, self.btnCli)
 
         # Layout
         mainLayout = QGridLayout()
@@ -62,25 +52,25 @@ class Calculator(QWidget):
         numLayout = QGridLayout()
 
         numLayout.addWidget(self.digitButton[0], 3, 0)
-        for i in range(1,10):
-            numLayout.addWidget(self.digitButton[i], 2-(i-1)//3, (i-1)%3)
+        idx = 1
+        for row in reversed(range(3)):
+            for col in range(3):
+                numLayout.addWidget(self.digitButton[idx], row, col)
+                idx += 1
 
-        numLayout.addWidget(self.decButton, 3, 1)
-        numLayout.addWidget(self.eqButton, 3, 2)
+        numLayout.addWidget(self.functionButton[0], 3, 1)
+        numLayout.addWidget(self.functionButton[1], 3, 2)
 
         mainLayout.addLayout(numLayout, 1, 0)
 
         opLayout = QGridLayout()
 
-        opLayout.addWidget(self.mulButton, 0, 0)
-        opLayout.addWidget(self.divButton, 0, 1)
-        opLayout.addWidget(self.addButton, 1, 0)
-        opLayout.addWidget(self.subButton, 1, 1)
-
-        opLayout.addWidget(self.lparButton, 2, 0)
-        opLayout.addWidget(self.rparButton, 2, 1)
-
-        opLayout.addWidget(self.clearButton, 3, 0)
+        idx = 2
+        for row in range(0, 3):
+            for col in range(0, 2):
+                opLayout.addWidget(self.functionButton[idx], row, col)
+                idx += 1
+        opLayout.addWidget(self.functionButton[idx], 3, 0)
 
         mainLayout.addLayout(opLayout, 1, 1)
 
