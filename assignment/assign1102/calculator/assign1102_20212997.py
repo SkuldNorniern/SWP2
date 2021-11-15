@@ -28,8 +28,8 @@ class Calculator(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.parentheses = 0    #괄호 남발을 방지하기 위한 변수 parentheses
-        self.resetList = ['0', 'Error!', '0으로 나눌 수 없습니다.']  #
+        self.parentheses = 0    #괄호 오류를 방지하기 위한 변수 parentheses
+        self.resetList = ['0', 'Error!', '0으로 나눌 수 없습니다.']  #해당 문구가 계산기 출력란에 있을때 입력할 경우 없어질 것들
 
         # Display Window
         self.display = QLineEdit('0')
@@ -85,16 +85,19 @@ class Calculator(QWidget):
             except:
                 result = "Error!"
             self.display.setText(result)
+
         elif key == 'C':
             self.parentheses = 0
             self.display.setText('0')
 
 
         elif key == '(':    #괄호 구현
-            if self.display.text()[-1].isnumeric() == True or self.display.text()[-1] == ')':   #마지막 글자가 숫자면 (를 썼을 때 *이 붙음. 이외에는 그냥 붙음.
+            if (self.display.text()[-1].isnumeric() == True or self.display.text()[-1] == ')') and not(self.display.text() in self.resetList):   #마지막 글자가 숫자면 (를 썼을 때 *이 붙음.
                 print(self.display.text()[-1])
                 self.display.setText(self.display.text() + '*' + key)
-            else:
+            else:   #이외에는 그냥 붙음
+                if self.display.text() in self.resetList:   #0과 오류들을 출력에서 없앰
+                    self.display.setText('')
                 self.display.setText(self.display.text() + key)
             self.parentheses += 1
 
@@ -104,32 +107,30 @@ class Calculator(QWidget):
                     self.display.setText(self.display.text() + key)
                     self.parentheses -= 1
 
-        elif key in constantList:
-            i=0
-            while i<4:
-                if key == constantList[i]:
-                    if self.display.text()[-1] != ')':  # 괄호 구현
-                        if self.display.text() in self.resetList:
-                            self.display.setText('')
-                    else:  # 괄호 구현
-                        if key.isnumeric() == True:
-                            self.display.setText(self.display.text() + '*')
-                    self.display.setText(self.display.text() + constantValues[i][1])
-                    break
-                i+=1
-        else:
-            if self.display.text()[-1] != ')':  #괄호 구현
-                if self.display.text() in self.resetList:
-                    self.display.setText('')
-            else:   #괄호 구현
-                if key.isnumeric() == True:
-                    self.display.setText(self.display.text() + '*')
-            self.display.setText(self.display.text() + key)
 
-            '''elif key in functionList:
-                if key==functionList[0]:
-                    n = self.display.text()
-                    value = calcF'''
+        elif key in constantList:   #상수 구현
+                if self.display.text()[-1] != ')':  # 괄호 구현
+                    if self.display.text() in self.resetList:
+                        self.display.setText('')
+                else:  # 괄호 구현
+                    if key.isnumeric() == True:
+                        self.display.setText(self.display.text() + '*')
+                self.display.setText(self.display.text() + constantValues[key])
+
+        elif key in functionList:   #함수 구현
+            n = self.display.text()
+            value = functionMap[functionList.index(key)][1](n)
+            self.display.setText((str(value)))
+
+
+        else:   #일반 입력
+            if self.display.text()[-1] != ')':  #마지막 글자가 )가 아니라면
+                if self.display.text() in self.resetList:   #0이나 오류 등을 화면에서 없앰
+                    self.display.setText('')
+            else:   #마지막 글자가 )라면
+                if key.isnumeric() == True:
+                    self.display.setText(self.display.text() + '*')     #보통 괄호 다음에 아무것도 표기하지 않으면 곱하기이기 때문에 곱하기 추가
+            self.display.setText(self.display.text() + key)
 
 
 if __name__ == '__main__':
